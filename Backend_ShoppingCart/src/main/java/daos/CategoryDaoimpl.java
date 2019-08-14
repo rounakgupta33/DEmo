@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +36,7 @@ public class CategoryDaoimpl implements CategoryDao{
 	public List<Category> getAllCategory() {
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			Query query = session.createQuery("from Catagory");
+			Query query = session.createQuery("from Category");
 			return query.list();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -55,8 +54,12 @@ public class CategoryDaoimpl implements CategoryDao{
 		return null;
 	}
 	public boolean deleteCategory(int id) {
-	
-		return false;
+		
+			Session session = sessionFactory.getCurrentSession();
+			Category c = session.get(Category.class, id);
+			session.delete(c);
+			return true;
+		
 	}
 
-}
+	}
